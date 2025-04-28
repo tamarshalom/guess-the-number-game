@@ -1,103 +1,106 @@
-import Image from "next/image";
+'use client'; //clinet-side component by letting the interactive page use buttons, timers, ect. 
+import confetti from 'canvas-confetti'; // confettie tool
+import { useEffect, useState } from 'react'; //React's smart tool
+//useEffect : runs the code right away when something happens
+//useState : creates and updates variables that react watches 
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [guess, setGuess] = useState(''); // updates setGuess with the value the user intputed into the guess box. Uses empty string to start since there is no guess in the beginning 
+  const [message, setMessage] = useState(''); // updates setMessage with the feedback message to show. Also starts with an empty string since there is no message on the start. 
+  const [number, setNumber] = useState(Math.floor(Math.random() * 100) + 1); // Resets setNumber when restarting the game, number is the computer generated number 1-100. 
+  const [attempts, setAttempts] = useState(0); // function to increase the attempt count Starts at 0 = no guesses
+  const [time, setTime] = useState(0);// how many seconds have passed, setTime function to increase time by 1 second starting at 0:00
+  const [isRunning, setIsRunning] = useState(true); //to see if timer is still running, setIsRunning to stop/start timer
+  const [guesses, setGuesses] = useState([]); //keeps track of all the guesses
+  const handleCheck = () => { //runs when user clicks check 
+    const userGuess = Number(guess); //turns useer input into a real number from string input 
+    setAttempts(attempts + 1); //increases # if attemots by 1 each try 
+    setGuesses((prevGuesses) => [...prevGuesses, userGuess]); //shows number of guesses 
+    if (userGuess > number) { //if user input is too high then message sent "too high"
+      setMessage('Too high!');
+    } else if (userGuess < number) { //if user input is too low then message sent "too low"
+      setMessage('Too low!');
+    } else { 
+      setMessage(`🎉 Correct! You guessed it in ${attempts + 1} tries!`); //if user input = target # number then message sent "correct!"
+      setIsRunning(false); //stops the timer 
+      confetti({ // shoots confetti if won
+        particleCount: 150,
+        spread:70,
+        origin: {y:0.6}
+      })
+    }   
+  };
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const handleRestart = () => {
+    setNumber(Math.floor(Math.random() * 100) + 1); // new computer generated number 1-100
+    setGuess(''); //resets the guess box from the previous guess
+    setMessage(''); // removes the message from the previous round 
+    setAttempts(0); //resets number of attempts back to 0
+    setTime(0); //reset timer
+  setIsRunning(true); // timer starts 
+  };
+  useEffect(() => { //runs when setIsRunning is also changes 
+    let interval; // stores the ID of the timer
+    if (isRunning) { 
+      interval = setInterval(() => { //Start a timer that fires every (1 second) (corresponds to below).
+        setTime((prevTime) => prevTime + 1); // add 1 ro whatever the time is 
+      }, 1000); // update every second
+    }
+    return () => clearInterval(interval);//stops when isRunning becomes false
+  }, [isRunning]); //useEffect is dependent on isRunning and if it changes or not.
+
+
+  return ( /*
+      flex flex-col ➔ Stack everything vertically
+      items-center ➔ Center all items horizontally
+      justify-center ➔ Center all items vertically
+      min-h-screen ➔ Take up the full height of the screen
+      p-6 ➔ Padding (spacing inside the edges)
+      bg-gradient-to-br from-blue-50 to-indigo-100 ➔ Light blue → light indigo gradient background
+      text-5xl ➔ Very large font size
+      font-extrabold ➔ Super bold font weight
+      text-indigo-500 ➔ Dark indigo text color
+      mb-8 ➔ Margin below it 
+      drop-shadow-lg ➔ shadow under the text 
+    */
+    <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-blue-50 to-indigo-100">  
+     <h1 className="text-5xl font-extrabold text-indigo-500 mb-8 drop-shadow-lg">
+  🎯 Guess the Number!
+      </h1>
+
+      <input
+        type="number" //only allows numbers to be typed 
+        value={guess} //controlled input
+        onChange={(e) => setGuess(e.target.value)} //updates setGuess whenever the user inputs something
+        placeholder="Enter a number 1–100" //whats typed into the box to let player know what to do
+        className="p-3 w-48 border-2 border-indigo-300 rounded-lg mb-6 text-center text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400" //design of the input number box and the color of the texts
+      /> 
+       <p className="mb-4 text-gray-600">⏳ Time Elapsed:{Math.floor(time / 60)}:{String(time % 60).padStart(2, '0')}s  </p> 
+
+      <button //chck button
+        onClick={handleCheck} //calls handleCheck
+        className="p-3 w-48 mb-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg transition-all" //the design of the check button
+      >
+      
+        Check 
+      </button> 
+
+      {message && (
+        <p className="text-lg text-indigo-500 font-medium mb-4">{message}</p> //shows <p> if message is not empty, designs and <p> displays the feedback 
+      )}
+      {message.includes('Correct') && guesses.length > 0 && (
+  <div className="text-center text-indigo-600 mb-6">
+    <h2 className="text-lg font-bold mb-2">Your Guesses:</h2>
+    <p>{guesses.join(', ')}</p>
+  </div>
+)}
+      <button //restart button
+        onClick={handleRestart} //calls the handleRestart function
+        className="p-3 w-48 bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-lg transition-all" //design of the button
+      >
+        Restart 
+      </button>
+    </main> 
+    
   );
 }
