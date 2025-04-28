@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#Guess the Number Game
 
-## Getting Started
+This is a simple and fun number guessing game built with Next.js and React!
 
-First, run the development server:
+Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Check out the live game here: [https://your-vercel-link.vercel.app](https://your-vercel-link.vercel.app)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📋 How to Play
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- A random number between 1 and 100 is generated.
+- Enter your guess and click the "Check" box.
+- The game will tell you if your guess is too high, too low, or correct.
+- Keep guessing until you find the number 
+- It tracks your number of attempts and how long you take.
+- When you guess correctly, your previous guesses will be displayed.
+- You can restart the game anytime by clicking the "Restart" button.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## The tech Stack
 
-## Learn More
+- Next.js (React Framework)
+- Tailwind CSS for styling
+- Canvas Confetti for win animation
+- JavaScript (ES6+)
+- Deployed on Vercel
 
-To learn more about Next.js, take a look at the following resources:
+## Design Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Timer tracking time elapsed
+- Confetti explosion when you win
+- List of all previous guesses
+- Responsive design for desktop and mobile
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How to Run Locally
 
-## Deploy on Vercel
+If you want to run the game on your own computer:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/guess-the-number-game.git
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
