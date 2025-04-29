@@ -4,7 +4,7 @@ This is a simple and fun number guessing game built with Next.js and React!
 
 Live Demo
 
-Check out the live game here: [https://your-vercel-link.vercel.app](https://your-vercel-link.vercel.app)
+Check out the live game here: https://guess-the-number-game-self.vercel.app/
 
 ## 📋 How to Play
 
