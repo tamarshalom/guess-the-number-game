@@ -30,6 +30,7 @@ Check out the live game here: [https://your-vercel-link.vercel.app](https://your
 - Confetti explosion when you win
 - List of all previous guesses
 - Responsive design for desktop and mobile
+- shake animation when user-input is wrong 
 
 ## How to Run Locally
 
